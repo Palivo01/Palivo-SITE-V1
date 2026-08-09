@@ -62,3 +62,9 @@ Todos os caminhos de CSS, JS, imagens, vídeos e páginas internas foram convert
 - Sistema de animação agora é fail-safe: textos ficam visíveis por padrão, mesmo se JavaScript falhar.
 - Mantidos dourado premium, Font Awesome Brands e funil CTA → formulário → WhatsApp.
 - Conferidas as 19 legendas do portfólio.
+
+
+## V3.6
+- Removida da Home a seção "Experiência — Do projeto à pele".
+- Removido junto o card "Processo criativo — História vira composição".
+- Restante da V3.5 preservado.

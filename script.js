@@ -60,5 +60,5 @@ if(form){
    else {const stepIndex=steps.findIndex(s=>s.contains(missing));if(stepIndex>=0){current=stepIndex;show(current);setTimeout(()=>missing.focus(),350)}}
    return
  }
- const msg=`Olá, Palivo! Quero solicitar um orçamento pelo site.\n\n${promo?`*Projeto:* ${promo}\n`:''}*Nome:* ${value('nome')}\n*Celular:* ${value('celular')}\n*Cidade:* ${value('cidade')}\n*Tamanho aproximado:* ${value('tamanho')}\n*Estilo:* ${value('estilo')}\n*Região do corpo:* ${value('areas')||'Não informada'}\n*Ideia / referência:* ${value('ideia')}\n\nVou enviar as imagens de referência nesta conversa.`;location.href=`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`});
+ const msg=`Olá, Palivo! Quero solicitar um orçamento pelo site.\n\n${promo?`*Projeto:* ${promo}\n`:''}*Nome:* ${value('nome')}\n*Celular:* ${value('celular')}\n*Cidade:* ${value('cidade')}\n*Tamanho aproximado:* ${value('tamanho')}\n*Estilo:* ${value('estilo')}\n*Região do corpo:* ${value('areas')||'Não informada'}\n*Ideia / referência:* ${value('ideia')}\n\nVou enviar as imagens de referência nesta conversa.`;gtag('event','lead_whatsapp');location.href=`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`});
 }

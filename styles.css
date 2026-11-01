@@ -314,3 +314,10 @@ html,body{max-width:100%;overflow-x:clip}.portfolio-stage{width:100%;max-width:1
 @media(max-width:560px){.hero-v33{padding-top:125px;padding-bottom:44px}.hero-v33 .display{font-size:clamp(2.55rem,10.4vw,3.6rem);letter-spacing:-.055em;overflow-wrap:normal}.hero-v33 .display br{display:none}.hero-v33 .hero-detail{font-size:.92rem}.hero-v33 .hero-actions{gap:12px}.copy-grid-four{grid-template-columns:minmax(0,1fr)}.copy-grid-four .card{padding:24px}.section-head h2,.cta-v33 h2{overflow-wrap:normal}.copy-closing{font-size:.9rem}.hero-v33 .hero-specialties{font-size:1.06rem}.portfolio-meta{margin-top:12px}.cta-v33 .hero-actions{flex-direction:column;align-items:stretch}}
 
 .about-copy .quote{font-size:clamp(1.65rem,2.5vw,2.4rem);line-height:1.25;margin:26px 0}.budget-hero-v33 .display{font-size:clamp(2.7rem,6.5vw,6.4rem);line-height:1.06}
+
+/* V3.3.2: faixa contínua, independente da rolagem e dos gestos da página. */
+.portfolio-scroller{display:block;overflow:hidden;padding:18px 0 24px;cursor:default;touch-action:pan-y;user-select:none}
+.portfolio-scroller:active{cursor:default}
+.portfolio-track{display:grid;grid-auto-flow:column;grid-auto-columns:clamp(240px,28vw,390px);gap:14px;width:max-content;will-change:transform}
+.portfolio-track img{-webkit-user-drag:none}
+@media(prefers-reduced-motion:reduce){.portfolio-scroller{overflow-x:auto;touch-action:pan-x pan-y}.portfolio-track{will-change:auto}}

@@ -12,43 +12,39 @@ fadeEls.forEach(el=>reveal.observe(el));
 
 const scroller=document.querySelector('.portfolio-scroller');
 if(scroller){
-  const shuffled=[...scroller.querySelectorAll('.portfolio-card')];
-  for(let i=shuffled.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]]}
-  const fragment=document.createDocumentFragment();shuffled.forEach(card=>fragment.appendChild(card));scroller.appendChild(fragment);
-  const cards=[...scroller.querySelectorAll('.portfolio-card')],playback=document.querySelector('#portfolioPlayback');
+  const originals=[...scroller.querySelectorAll('.portfolio-card')];
+  for(let i=originals.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[originals[i],originals[j]]=[originals[j],originals[i]]}
+  const track=document.createElement('div');track.className='portfolio-track';
+  originals.forEach(card=>track.appendChild(card));
+  // A segunda sequência mantém a passagem entre a última e a primeira sem corte.
+  const copies=originals.map(card=>{
+    const copy=card.cloneNode(true);copy.setAttribute('aria-hidden','true');
+    copy.querySelectorAll('[id]').forEach(el=>el.removeAttribute('id'));
+    track.appendChild(copy);return copy;
+  });
+  scroller.appendChild(track);scroller.removeAttribute('tabindex');
+  const cards=[...originals,...copies];
   const motion=window.matchMedia('(prefers-reduced-motion: reduce)');
-  let down=false,startX=0,startScroll=0,hover=false,focused=false,paused=motion.matches,visible=false,resumeAt=0,frame=0,last=0,direction=1,cursor=scroller.scrollLeft;
-  const syncButton=()=>{if(!playback)return;playback.textContent=paused?'Continuar':'Pausar';playback.setAttribute('aria-pressed',String(paused));playback.setAttribute('aria-label',paused?'Retomar movimento do portfólio':'Pausar movimento do portfólio')};
-  syncButton();playback?.addEventListener('click',()=>{paused=!paused;syncButton()});
-  motion.addEventListener('change',e=>{paused=e.matches;syncButton()});
-  const hold=()=>{resumeAt=performance.now()+4500};
-  scroller.addEventListener('pointerdown',e=>{hold();if(e.pointerType==='mouse'){down=true;startX=e.clientX;startScroll=scroller.scrollLeft}});
-  window.addEventListener('pointerup',()=>{if(down){down=false;hold()}});
-  window.addEventListener('pointercancel',()=>{down=false;hold()});
-  scroller.addEventListener('pointermove',e=>{if(down){scroller.scrollLeft=startScroll-(e.clientX-startX)*1.2;hold()}});
-  scroller.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse')hover=true});
-  scroller.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse'){hover=false;down=false}});
-  scroller.addEventListener('wheel',hold,{passive:true});
-  scroller.addEventListener('keydown',hold);
-  scroller.addEventListener('focusin',()=>{focused=scroller.matches(':focus-visible')});
-  scroller.addEventListener('focusout',e=>{focused=scroller.contains(e.relatedTarget);hold()});
+  let offset=0,cycle=0,last=0,activeAt=0;
+  const measure=()=>{
+    cycle=originals.length&&copies.length?copies[0].offsetLeft-originals[0].offsetLeft:0;
+    if(cycle>0)offset%=cycle;
+  };
   const setActive=()=>{
-    const center=scroller.getBoundingClientRect().left+scroller.clientWidth/2;let best=null,dist=Infinity;
-    cards.forEach(c=>{const r=c.getBoundingClientRect(),d=Math.abs((r.left+r.width/2)-center);if(d<dist){dist=d;best=c}});
-    cards.forEach(c=>c.classList.toggle('is-active',c===best));
+    const center=scroller.getBoundingClientRect().left+scroller.clientWidth/2;
+    let best=null,dist=Infinity;
+    cards.forEach(card=>{const r=card.getBoundingClientRect(),d=Math.abs(r.left+r.width/2-center);if(d<dist){dist=d;best=card}});
+    cards.forEach(card=>card.classList.toggle('is-active',card===best));
   };
-  let activeTimer=0;scroller.addEventListener('scroll',()=>{if(!activeTimer)activeTimer=setTimeout(()=>{activeTimer=0;setActive()},120)},{passive:true});setActive();
+  measure();setActive();window.addEventListener('resize',measure);
   const animate=now=>{
-    frame=0;if(!visible)return;
-    const elapsed=last?Math.min(now-last,50):0;last=now;
-    if(!paused&&!hover&&!focused&&!down&&!document.hidden&&now>=resumeAt){
-      const max=scroller.scrollWidth-scroller.clientWidth;
-      if(max>0){cursor+=direction*elapsed*.032;if(cursor>=max){cursor=max;direction=-1}else if(cursor<=0){cursor=0;direction=1}scroller.scrollLeft=cursor}
-    }else cursor=scroller.scrollLeft;
-    frame=requestAnimationFrame(animate);
+    const elapsed=last?Math.min(now-last,64):0;last=now;
+    if(!motion.matches&&cycle>0){offset=(offset+elapsed*.065)%cycle;track.style.transform=`translate3d(${-offset}px,0,0)`}
+    if(now-activeAt>=150){activeAt=now;setActive()}
+    requestAnimationFrame(animate);
   };
-  const observer=new IntersectionObserver(entries=>{visible=entries.some(e=>e.isIntersecting);last=0;if(visible&&!frame)frame=requestAnimationFrame(animate);else if(!visible&&frame){cancelAnimationFrame(frame);frame=0}},{threshold:.05});
-  observer.observe(scroller);
+  // O movimento independe de toque, foco, hover e visibilidade da seção.
+  requestAnimationFrame(animate);
 }
 
 const form=document.querySelector('#projectForm');

@@ -281,3 +281,36 @@ html,body{max-width:100%;overflow-x:clip}.portfolio-stage{width:100%;max-width:1
 @media(max-width:900px){.hero-grid{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:560px){.hero .display{font-size:clamp(3rem,16vw,5.6rem);overflow-wrap:normal}.hero-copy p{max-width:100%}.hero-actions{max-width:100%}.hero-actions .btn{max-width:100%;white-space:normal;text-align:center}.portfolio-meta{margin-top:4px}}
 @media(prefers-reduced-motion:reduce){.portfolio-card,.portfolio-card img{transition:none}}
+
+/* V3.3: nova copy com leitura confortável no desktop e no celular. */
+.hero-v33 .hero-grid{grid-template-columns:minmax(0,1fr)}
+.hero-v33 .hero-copy{max-width:1000px}
+.hero-v33 .display{font-size:clamp(3.2rem,6.4vw,6.4rem);line-height:1.05;letter-spacing:-.055em;max-width:100%}
+.hero-v33 .hero-specialties{font-size:clamp(1.1rem,1.8vw,1.4rem);color:#eee6d5;max-width:730px}
+.hero-v33 .hero-detail{font-size:1rem;line-height:1.8;max-width:680px}
+.hero-v33 .hero-support{font-size:.8rem;line-height:1.7;max-width:650px;margin-top:24px}
+.about-copy p{line-height:1.8;max-width:65ch}
+.about-copy h2{font-size:clamp(2.2rem,3.5vw,3.5rem)}
+#sobre .about-grid{align-items:start}
+#sobre .about-photo{position:sticky;top:100px}
+.copy-grid-four{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.copy-grid-four .card{padding:28px 24px}
+.copy-grid-four .card h3{font-size:1.4rem}
+.copy-grid-four .card p{font-size:.92rem;line-height:1.8}
+.copy-followup{margin-top:28px;max-width:760px}
+.copy-followup p,.copy-closing{color:var(--muted);line-height:1.8}
+.copy-followup .btn{margin-top:8px}
+.copy-closing{max-width:780px;margin-top:26px;font-size:.95rem}
+.process-grid .card-number{font-size:1rem;color:var(--gold)}
+.cards .card .btn{max-width:100%;white-space:normal;text-align:center}
+.cta-v33{display:block;padding:clamp(26px,5vw,64px)}
+.cta-v33 h2{max-width:900px}
+.cta-v33 p{max-width:730px;line-height:1.8;color:var(--muted)}
+.cta-v33 .note{margin-top:28px}
+.footer-grid p{font-size:.85rem;line-height:1.8;color:var(--muted);margin:8px 0}
+.footer-grid small{font-size:.72rem;color:var(--muted)}
+@media(max-width:1050px){.copy-grid-four{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:900px){#sobre .about-photo{position:static}.hero-v33 .display{font-size:clamp(2.8rem,7.8vw,5rem)}}
+@media(max-width:560px){.hero-v33{padding-top:125px;padding-bottom:44px}.hero-v33 .display{font-size:clamp(2.55rem,10.4vw,3.6rem);letter-spacing:-.055em;overflow-wrap:normal}.hero-v33 .display br{display:none}.hero-v33 .hero-detail{font-size:.92rem}.hero-v33 .hero-actions{gap:12px}.copy-grid-four{grid-template-columns:minmax(0,1fr)}.copy-grid-four .card{padding:24px}.section-head h2,.cta-v33 h2{overflow-wrap:normal}.copy-closing{font-size:.9rem}.hero-v33 .hero-specialties{font-size:1.06rem}.portfolio-meta{margin-top:12px}.cta-v33 .hero-actions{flex-direction:column;align-items:stretch}}
+
+.about-copy .quote{font-size:clamp(1.65rem,2.5vw,2.4rem);line-height:1.25;margin:26px 0}.budget-hero-v33 .display{font-size:clamp(2.7rem,6.5vw,6.4rem);line-height:1.06}

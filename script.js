@@ -12,6 +12,11 @@ fadeEls.forEach(el=>reveal.observe(el));
 
 const scroller=document.querySelector('.portfolio-scroller');
 if(scroller){
+  // Fisher–Yates: reorganiza os mesmos trabalhos a cada abertura da página.
+  const shuffled=[...scroller.querySelectorAll('.portfolio-card')];
+  for(let i=shuffled.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]]}
+  const fragment=document.createDocumentFragment();shuffled.forEach(card=>fragment.appendChild(card));scroller.appendChild(fragment);
+
   let down=false,startX=0,startScroll=0;
   scroller.addEventListener('mousedown',e=>{down=true;startX=e.pageX;startScroll=scroller.scrollLeft});
   window.addEventListener('mouseup',()=>down=false);
